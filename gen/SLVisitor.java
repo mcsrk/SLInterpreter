@@ -580,6 +580,12 @@ public interface SLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitFunc(SLParser.FuncContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link SLParser#id}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitId(SLParser.IdContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link SLParser#tk_numero}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

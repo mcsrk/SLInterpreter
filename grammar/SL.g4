@@ -1,53 +1,53 @@
 grammar SL;
 
 s : declaration |
-		'programa' ID declaration  ;
+		'programa' id declaration  ;
 
 declaration : 'const' dec_constants |
 		'inicio' main_program |
 		'tipos' dec_types |
 		'var' dec_variables  ;
 
-dec_constants : ID '=' constant_literal constants_statement_terminator dec_constants_continue  ;
+dec_constants : id '=' constant_literal constants_statement_terminator dec_constants_continue  ;
 
 dec_constants_continue : declaration |
-		ID '=' constant_literal constants_statement_terminator dec_constants_continue  ;
+		id '=' constant_literal constants_statement_terminator dec_constants_continue  ;
 
 constants_statement_terminator : ';' |
 		  ;
 
-dec_variables : ID dec_variable_separator dec_variables_continue  ;
+dec_variables : id dec_variable_separator dec_variables_continue  ;
 
-dec_variables_continue : ID dec_variable_separator dec_variables_continue |
+dec_variables_continue : id dec_variable_separator dec_variables_continue |
 		declaration  ;
 
-dec_types : ID ':' structured_type types_statement_terminator dec_types_continue  ;
+dec_types : id ':' structured_type types_statement_terminator dec_types_continue  ;
 
 dec_types_continue : declaration |
-		ID ':' structured_type types_statement_terminator dec_types_continue  ;
+		id ':' structured_type types_statement_terminator dec_types_continue  ;
 
 types_statement_terminator : ';' |
 		  ;
 
 dec_variable_separator : ':' structured_type var_statement_terminator |
-		',' ID dec_variable_separator  ;
+		',' id dec_variable_separator  ;
 
 var_statement_terminator : ';' |
 		  ;
 
 type : 'cadena' |
-		ID |
+		id |
 		register |
 		'numerico' |
 		'logico'  ;
 
 register : 'registro' '{' register_data  ;
 
-register_data : ID register_var structured_type register_data |
+register_data : id register_var structured_type register_data |
 		'}'  ;
 
 register_var : ':' |
-		',' ID register_var  ;
+		',' id register_var  ;
 
 structured_type : vector_type type |
 		type |
@@ -59,7 +59,7 @@ matrix_type : 'matriz' '[' matrix_index_size  ;
 
 vector_index_size : '*' |
 		tk_numero |
-		ID  ;
+		id  ;
 
 matrix_index_size : vector_index_size ',' vector_index_size matrix_index_separator  ;
 
@@ -89,22 +89,22 @@ routine_declaration : 'var' routine_dec_variables routine_declaration |
 		'inicio' routine_program |
 		'tipos' routine_dec_types routine_declaration  ;
 
-routine_dec_constants : ID '=' constant_literal constants_statement_terminator routine_dec_constants_continue  ;
+routine_dec_constants : id '=' constant_literal constants_statement_terminator routine_dec_constants_continue  ;
 
 routine_dec_constants_continue : routine_declaration |
-		ID '=' constant_literal constants_statement_terminator routine_dec_constants_continue  ;
+		id '=' constant_literal constants_statement_terminator routine_dec_constants_continue  ;
 
-routine_dec_variables : ID dec_variable_separator routine_dec_variables_continue  ;
+routine_dec_variables : id dec_variable_separator routine_dec_variables_continue  ;
 
-routine_dec_variables_continue : ID dec_variable_separator routine_dec_variables_continue |
+routine_dec_variables_continue : id dec_variable_separator routine_dec_variables_continue |
 		routine_declaration  ;
 
-routine_dec_types : ID ':' structured_type types_statement_terminator routine_dec_types_continue  ;
+routine_dec_types : id ':' structured_type types_statement_terminator routine_dec_types_continue  ;
 
-routine_dec_types_continue : ID ':' structured_type types_statement_terminator routine_dec_types_continue |
+routine_dec_types_continue : id ':' structured_type types_statement_terminator routine_dec_types_continue |
 		routine_declaration  ;
 
-routine_signature : ID '(' routine_parameters ')' routine_return_type  ;
+routine_signature : id '(' routine_parameters ')' routine_return_type  ;
 
 routine_parameters :  |
 		routine_parameter  ;
@@ -120,7 +120,7 @@ routine_parameter_separator : ':' structured_type routine_parameter_separator |
 		routine_parameter |
 		';' routine_parameter  ;
 
-routine_param : ID routine_param_separtor  ;
+routine_param : id routine_param_separtor  ;
 
 routine_param_separtor :  |
 		',' routine_param  ;
@@ -209,7 +209,7 @@ until_program : main_sentence until_statement_terminator until_program |
 until_statement_terminator :  |
 		';'  ;
 
-from : 'desde' ID '=' p_exp 'hasta' p_exp from_step  ;
+from : 'desde' id '=' p_exp 'hasta' p_exp from_step  ;
 
 from_step : rep_body |
 		'paso' p_exp rep_body  ;
@@ -233,15 +233,15 @@ term : '(' p_exp ')' |
 		unop term |
 		'{' vector_value '}'  ;
 
-id_f : ID id_complement |
+id_f : id id_complement |
 		func '(' parameter  ;
 
 id_complement :  |
-		'.' ID id_extraction |
+		'.' id id_extraction |
 		'(' parameter |
 		'[' p_exp vec_sep ']' id_extraction  ;
 
-id_extraction : '.' ID id_extraction |
+id_extraction : '.' id id_extraction |
 		'[' p_exp vec_sep ']' id_extraction |
 		  ;
 
@@ -253,9 +253,9 @@ param : p_exp p_sep  ;
 p_sep : ')' |
 		',' param  ;
 
-assign : ID id_complement id_exp  ;
+assign : id id_complement id_exp  ;
 
-prog_exp : ID id_complement op_term |
+prog_exp : id id_complement op_term |
 		t op_term  ;
 
 id_exp :  |
@@ -267,7 +267,7 @@ t : literal |
 		unop unop_operand |
 		'{' vector_value '}'  ;
 
-unop_operand : ID id_complement |
+unop_operand : id id_complement |
 		t  ;
 
 function_call : func '(' parameter  ;
@@ -280,7 +280,7 @@ condition : '(' p_exp ')'  ;
 vector_value : vector_literal vector_sep  ;
 
 vector_literal : 'true' |
-		ID |
+		id |
 		'{' vector_value '}' |
 		 |
 		tk_numero |
@@ -354,6 +354,7 @@ func : 'paramval' |
 		'mem' |
 		'ord'  ;
 
+id : ID;
 ID : [a-zA-Z][a-zA-Z0-9_]* ;
 
 TK_CADENA : ["'] (~["'])* ["'] ;
