@@ -11,20 +11,20 @@ declaration : 'const' dec_constants |
 dec_constants : id '=' constant_literal constants_statement_terminator dec_constants_continue  ;
 
 dec_constants_continue : declaration |
-		id '=' constant_literal constants_statement_terminator dec_constants_continue  ;
+		dec_constants  ;
 
 constants_statement_terminator : ';' |
 		  ;
 
 dec_variables : id dec_variable_separator dec_variables_continue  ;
 
-dec_variables_continue : id dec_variable_separator dec_variables_continue |
+dec_variables_continue : dec_variables |
 		declaration  ;
 
 dec_types : id ':' structured_type types_statement_terminator dec_types_continue  ;
 
 dec_types_continue : declaration |
-		id ':' structured_type types_statement_terminator dec_types_continue  ;
+		dec_types  ;
 
 types_statement_terminator : ';' |
 		  ;
@@ -92,16 +92,16 @@ routine_declaration : 'var' routine_dec_variables routine_declaration |
 routine_dec_constants : id '=' constant_literal constants_statement_terminator routine_dec_constants_continue  ;
 
 routine_dec_constants_continue : routine_declaration |
-		id '=' constant_literal constants_statement_terminator routine_dec_constants_continue  ;
+		routine_dec_constants  ;
 
 routine_dec_variables : id dec_variable_separator routine_dec_variables_continue  ;
 
-routine_dec_variables_continue : id dec_variable_separator routine_dec_variables_continue |
+routine_dec_variables_continue : routine_dec_variables |
 		routine_declaration  ;
 
 routine_dec_types : id ':' structured_type types_statement_terminator routine_dec_types_continue  ;
 
-routine_dec_types_continue : id ':' structured_type types_statement_terminator routine_dec_types_continue |
+routine_dec_types_continue : routine_dec_types |
 		routine_declaration  ;
 
 routine_signature : id '(' routine_parameters ')' routine_return_type  ;

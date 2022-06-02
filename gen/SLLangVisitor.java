@@ -3,6 +3,11 @@ import java.util.HashMap;
 public class SLLangVisitor<T> extends SLBaseVisitor<T>{
     HashMap<String,Object> table = new HashMap<>();
 
+    @Override public T visitDec_constants(SLParser.Dec_constantsContext ctx) {
+        table.put(ctx.id().getText(), visitConstant_literal(ctx.constant_literal()));
+        return visitDec_constants_continue(ctx.dec_constants_continue());
+    }
+
     @Override public T visitTk_numero(SLParser.Tk_numeroContext ctx) {
         if (ctx.FLOAT() != null) {
             return (T) new Float(ctx.INTEGER().getText());
