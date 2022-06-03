@@ -1,0 +1,6 @@
+const
+    C = 1
+var
+    a : cadena
+inicio
+fin

@@ -11,5 +11,6 @@ public class Main {
 
         SLLangVisitor loader = new SLLangVisitor();
         loader.visit(tree);
+        System.out.println(loader.table);
     }
 }

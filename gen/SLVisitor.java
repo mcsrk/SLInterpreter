@@ -46,6 +46,18 @@ public interface SLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitDec_variables(SLParser.Dec_variablesContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link SLParser#id_list}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitId_list(SLParser.Id_listContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SLParser#id_list_cont}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitId_list_cont(SLParser.Id_list_contContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link SLParser#dec_variables_continue}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -70,12 +82,6 @@ public interface SLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitTypes_statement_terminator(SLParser.Types_statement_terminatorContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link SLParser#dec_variable_separator}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitDec_variable_separator(SLParser.Dec_variable_separatorContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link SLParser#var_statement_terminator}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -94,17 +100,11 @@ public interface SLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitRegister(SLParser.RegisterContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link SLParser#register_data}.
+	 * Visit a parse tree produced by {@link SLParser#register_members}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitRegister_data(SLParser.Register_dataContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SLParser#register_var}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitRegister_var(SLParser.Register_varContext ctx);
+	T visitRegister_members(SLParser.Register_membersContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link SLParser#structured_type}.
 	 * @param ctx the parse tree
@@ -112,35 +112,23 @@ public interface SLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStructured_type(SLParser.Structured_typeContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link SLParser#vector_type}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitVector_type(SLParser.Vector_typeContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SLParser#matrix_type}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitMatrix_type(SLParser.Matrix_typeContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link SLParser#vector_index_size}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitVector_index_size(SLParser.Vector_index_sizeContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link SLParser#matrix_index_size}.
+	 * Visit a parse tree produced by {@link SLParser#matrix_index_list}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitMatrix_index_size(SLParser.Matrix_index_sizeContext ctx);
+	T visitMatrix_index_list(SLParser.Matrix_index_listContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link SLParser#matrix_index_separator}.
+	 * Visit a parse tree produced by {@link SLParser#matrix_index_list_cont}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitMatrix_index_separator(SLParser.Matrix_index_separatorContext ctx);
+	T visitMatrix_index_list_cont(SLParser.Matrix_index_list_contContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link SLParser#main_program}.
 	 * @param ctx the parse tree

@@ -16,7 +16,11 @@ dec_constants_continue : declaration |
 constants_statement_terminator : ';' |
 		  ;
 
-dec_variables : id dec_variable_separator dec_variables_continue  ;
+dec_variables : id_list ':' structured_type var_statement_terminator dec_variables_continue  ;
+
+id_list : id id_list_cont;
+
+id_list_cont : ',' id id_list_cont | ;
 
 dec_variables_continue : dec_variables |
 		declaration  ;
@@ -29,9 +33,6 @@ dec_types_continue : declaration |
 types_statement_terminator : ';' |
 		  ;
 
-dec_variable_separator : ':' structured_type var_statement_terminator |
-		',' id dec_variable_separator  ;
-
 var_statement_terminator : ';' |
 		  ;
 
@@ -41,30 +42,21 @@ type : 'cadena' |
 		'numerico' |
 		'logico'  ;
 
-register : 'registro' '{' register_data  ;
+register : 'registro' '{' register_members '}' ;
 
-register_data : id register_var structured_type register_data |
-		'}'  ;
+register_members : id_list ':' structured_type register_members | ;
 
-register_var : ':' |
-		',' id register_var  ;
-
-structured_type : vector_type type |
+structured_type : 'vector' '[' vector_index_size ']'  type |
 		type |
-		matrix_type type  ;
-
-vector_type : 'vector' '[' vector_index_size ']'  ;
-
-matrix_type : 'matriz' '[' matrix_index_size  ;
+		'matriz' '[' matrix_index_list  ']'  type  ;
 
 vector_index_size : '*' |
 		tk_numero |
 		id  ;
 
-matrix_index_size : vector_index_size ',' vector_index_size matrix_index_separator  ;
+matrix_index_list : vector_index_size  matrix_index_list_cont;
 
-matrix_index_separator : ']' |
-		',' vector_index_size matrix_index_separator  ;
+matrix_index_list_cont : ',' vector_index_size matrix_index_list_cont | ;
 
 main_program : 'fin' routine |
 		main_sentence main_program_statement_terminator main_program  ;
@@ -94,7 +86,7 @@ routine_dec_constants : id '=' constant_literal constants_statement_terminator r
 routine_dec_constants_continue : routine_declaration |
 		routine_dec_constants  ;
 
-routine_dec_variables : id dec_variable_separator routine_dec_variables_continue  ;
+routine_dec_variables : id_list ':' structured_type var_statement_terminator routine_dec_variables_continue  ;
 
 routine_dec_variables_continue : routine_dec_variables |
 		routine_declaration  ;
