@@ -3,6 +3,11 @@ import java.util.*;
 public class SLLangVisitor<T> extends SLBaseVisitor<T>{
     HashMap<String,Object> table = new HashMap<>();
 
+    @Override public T visitDec_types(SLParser.Dec_typesContext ctx) {
+        table.put(ctx.id().getText(), visitStructured_type(ctx.structured_type()));
+        return visitDec_types_continue(ctx.dec_types_continue());
+    }
+
     @Override public T visitRegister_members(SLParser.Register_membersContext ctx) {
         if (ctx.structured_type() != null) {
             var reg = (RegisterType) visitRegister_members(ctx.register_members());
@@ -13,6 +18,10 @@ public class SLLangVisitor<T> extends SLBaseVisitor<T>{
         }
 
         return (T) new RegisterType("");
+    }
+
+    @Override public T visitRegister(SLParser.RegisterContext ctx) {
+        return visitRegister_members(ctx.register_members());
     }
 
     @Override public T visitType(SLParser.TypeContext ctx) {
@@ -62,7 +71,7 @@ public class SLLangVisitor<T> extends SLBaseVisitor<T>{
         if (ctx.id_list_cont() == null) {
             return (T) new ArrayList();
         }
-        var list = (List) ctx.id_list_cont();
+        var list = (List) visitId_list_cont(ctx.id_list_cont());
         list.add(ctx.id().getText());
         return (T) list;
     }

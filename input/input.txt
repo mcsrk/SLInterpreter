@@ -2,5 +2,15 @@ const
     C = 1
 var
     a : cadena
+    r, i : registro {
+            a : cadena
+            b : cadena
+        }
+tipos
+    re : registro {
+        a : cadena
+        b : cadena
+    }
+    a : cadena
 inicio
 fin
