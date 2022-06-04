@@ -138,7 +138,7 @@ public class SLLangVisitor<T> extends SLBaseVisitor<T>{
     }
 
     //####################################################################
-    //################################ DESDE ###########################
+    //################################ CICLOS ###########################
     //####################################################################
 
     @Override public T visitFrom(SLParser.FromContext ctx) {
@@ -153,11 +153,27 @@ public class SLLangVisitor<T> extends SLBaseVisitor<T>{
             step = (int)(double)(Double)visitP_exp(ctx.from_step().p_exp());
         }
 
-        for(int i = (int) table.get(ctx.id().getText()); i <= times ; i = i+step){
+        for(int i =((Integer) table.get(ctx.id().getText())); i <= times ; i = i+step){
             visitRep_body(ctx.from_step().rep_body());
             table.replace(ctx.id().getText(), i + step );
         }
         table.remove(ctx.id().getText());
+
+        return null;
+    }
+
+    @Override public T visitUntil(SLParser.UntilContext ctx) {
+
+        var boolCond = true;
+
+        // search for condition
+        if(ctx.until_program().condition() != null){
+            boolCond = ((Boolean) visitCondition(ctx.until_program().condition()));
+        }
+
+        do{
+            visitMain_sentence(ctx.until_program().main_sentence());
+        }while(boolCond);
 
         return null;
     }
