@@ -166,14 +166,28 @@ public class SLLangVisitor<T> extends SLBaseVisitor<T>{
 
         var boolCond = true;
 
-        // search for condition
-        if(ctx.until_program().condition() != null){
-            boolCond = ((Boolean) visitCondition(ctx.until_program().condition()));
-        }
-
         do{
             visitMain_sentence(ctx.until_program().main_sentence());
+            // search for condition and update it
+            if(ctx.until_program().condition() != null){
+                boolCond = ((Boolean) visitCondition(ctx.until_program().condition()));
+            }
         }while(boolCond);
+
+        return null;
+    }
+
+    @Override public T visitWhile_stat(SLParser.While_statContext ctx) {
+
+        var boolCond = true;
+
+        while(boolCond){
+            visitRep_body(ctx.rep_body());
+            // search for condition and update it
+            if(ctx.condition() != null){
+                boolCond = ((Boolean) visitCondition(ctx.condition()));
+            }
+        };
 
         return null;
     }
