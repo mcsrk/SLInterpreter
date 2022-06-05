@@ -192,4 +192,8 @@ public class SLLangVisitor<T> extends SLBaseVisitor<T>{
         return null;
     }
 
+    @Override public T visitRep_body(SLParser.Rep_bodyContext ctx){
+        visitMain_sentence(ctx.rep_body_program().main_sentence());
+        return null;
+    }
 }
